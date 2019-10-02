@@ -1,0 +1,9 @@
+C:\Users\Souvik Mazumder\source\repos\Ecosystem.Engine\Ecosystem.Engine\bin\Debug\netcoreapp2.2\Ecosystem.Engine.deps.json
+C:\Users\Souvik Mazumder\source\repos\Ecosystem.Engine\Ecosystem.Engine\bin\Debug\netcoreapp2.2\Ecosystem.Engine.dll
+C:\Users\Souvik Mazumder\source\repos\Ecosystem.Engine\Ecosystem.Engine\bin\Debug\netcoreapp2.2\Ecosystem.Engine.pdb
+C:\Users\Souvik Mazumder\source\repos\Ecosystem.Engine\Ecosystem.Engine\obj\Debug\netcoreapp2.2\Ecosystem.Engine.csprojAssemblyReference.cache
+C:\Users\Souvik Mazumder\source\repos\Ecosystem.Engine\Ecosystem.Engine\obj\Debug\netcoreapp2.2\Ecosystem.Engine.csproj.CoreCompileInputs.cache
+C:\Users\Souvik Mazumder\source\repos\Ecosystem.Engine\Ecosystem.Engine\obj\Debug\netcoreapp2.2\Ecosystem.Engine.AssemblyInfoInputs.cache
+C:\Users\Souvik Mazumder\source\repos\Ecosystem.Engine\Ecosystem.Engine\obj\Debug\netcoreapp2.2\Ecosystem.Engine.AssemblyInfo.cs
+C:\Users\Souvik Mazumder\source\repos\Ecosystem.Engine\Ecosystem.Engine\obj\Debug\netcoreapp2.2\Ecosystem.Engine.dll
+C:\Users\Souvik Mazumder\source\repos\Ecosystem.Engine\Ecosystem.Engine\obj\Debug\netcoreapp2.2\Ecosystem.Engine.pdb
