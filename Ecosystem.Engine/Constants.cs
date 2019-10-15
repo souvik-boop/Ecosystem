@@ -1,18 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Ecosystem.Engine
+﻿namespace Ecosystem.Engine
 {
     public class Constants
     {
         public enum EntityTypes
         {
-            MovedEntity = -2,
-            FedRabbit = -1,
-            Empty,
-            Rabbit,
-            Berries,
+            //Environmental entities
+            Empty = 0,
+
+            //Obstacle entities
+            Tree = 1000,
+
+            //Consumer entities
+            Rabbit = 2000,
+            FedRabbit = 2001,
+            MovedRabbit = 2002,
+
+            //Food Source entities
+            Berries = 3000,
         }
     }
 }

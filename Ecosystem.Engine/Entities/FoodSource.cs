@@ -6,7 +6,7 @@ namespace Ecosystem.Engine.Entities
 {
     public abstract class FoodSource
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public double Quantity { get; set; }
         public int Lifetime { get; set; }
     }
