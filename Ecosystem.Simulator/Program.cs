@@ -1,7 +1,10 @@
 ﻿using Ecosystem.Engine;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using static Ecosystem.Engine.Constants;
 
@@ -11,20 +14,26 @@ namespace Ecosystem.Simulator
     {
         static void Main(string[] args)
         {
-            //int numOfDays = 100;
             int dayCycle = 100;
-            int areaSize = 50;
-            int food = 10;
-            int animal = 10;
-            int obstacle = 500;
+            int areaSize = 70;
+            int food = 100;
+            int animal = 100;
+            int obstacle = 0;
             Core sim1 = new Core();
             int startDay = 1;
+            List<int> pop = new List<int>();
+
             while (animal != 0)
             {
+                //GeneratePopulationProgressGraph(animal, startDay);
+                pop.Add(animal);
+                if (pop.Count > 5) pop.Remove(pop.FirstOrDefault());
+
                 Console.Clear();
                 var newResult = sim1.GenerateScene(areaSize, areaSize, obstacle, food, animal).Result;
                 int fedPop;
-                GenerateDisplay(areaSize, newResult, out fedPop);
+                int matedPop;
+                GenerateDisplay(areaSize, newResult, out fedPop, out matedPop);
                 Console.Clear();
                 int iter = 0;
                 bool flag = false;
@@ -36,26 +45,37 @@ namespace Ecosystem.Simulator
                     {
                         Console.Clear();
                         newResult = sim1.NextFrame(areaSize, areaSize, newResult).Result;
-                        flag = GenerateDisplay(areaSize, newResult, out fedPop);
+                        flag = GenerateDisplay(areaSize, newResult, out fedPop, out matedPop);
                         Console.WriteLine("Time : " + iter);
                     }
                     //Console.ReadKey();
-                    //Task.Delay(1000).Wait();
+                    Task.Delay(10).Wait();
                 }
 
-                animal = fedPop * 2;
+                animal = fedPop + matedPop * 4;
                 ++startDay;
                 Console.WriteLine("Day Number : " + startDay);
                 Console.WriteLine("Current Population : " + animal);
-                Console.ReadKey();
+
+                foreach (var item in pop)
+                {
+                    Console.Write(item + " --> ");
+                }
+                Console.WriteLine();
+                Console.WriteLine("---------------------------------------");
+                Console.WriteLine("Going to next day in 5 secs ...");
+                Task.Delay(5000).Wait();
+                //Console.ReadKey();
             }
-            Console.ReadLine();
+            Console.Clear();
+            Console.WriteLine($"Population survived for {startDay} days");
         }
 
-        private static bool GenerateDisplay(int size, int[,] result, out int fedPop)
+        private static bool GenerateDisplay(int size, int[,] result, out int fedPop, out int matedPop)
         {
             int unfed = 0;
             int fed = 0;
+            int mated = 0;
             int food = 0;
             for (int i = 0; i < size; i++)
             {
@@ -64,28 +84,25 @@ namespace Ecosystem.Simulator
                     switch ((EntityTypes)result[i, j])
                     {
                         case EntityTypes.Empty:
-                            //Console.Write(" ");
                             break;
                         case EntityTypes.Rabbit:
-                            //Console.Write("X");
                             unfed++;
                             break;
                         case EntityTypes.Berries:
-                            //Console.Write("o");
                             food++;
                             break;
                         case EntityTypes.Tree:
-                            //Console.Write("|");
                             break;
                         case EntityTypes.FedRabbit:
-                            //Console.Write("#");
                             fed++;
+                            break;
+                        case EntityTypes.MatedRabbit:
+                            mated++;
                             break;
                         default:
                             break;
                     }
                 }
-                //Console.WriteLine();
             }
 
             const int squareWidth = 10;
@@ -111,10 +128,13 @@ namespace Ecosystem.Simulator
                                     gfx.FillRectangle(Brushes.Yellow, new Rectangle(x * squareWidth, y * squareHeight, squareWidth, squareHeight));
                                     break;
                                 case EntityTypes.Tree:
-                                    gfx.FillRectangle(Brushes.Green, new Rectangle(x * squareWidth, y * squareHeight, squareWidth, squareHeight));
+                                    gfx.FillRectangle(Brushes.DarkGreen, new Rectangle(x * squareWidth, y * squareHeight, squareWidth, squareHeight));
                                     break;
                                 case EntityTypes.FedRabbit:
                                     gfx.FillRectangle(Brushes.DarkBlue, new Rectangle(x * squareWidth, y * squareHeight, squareWidth, squareHeight));
+                                    break;
+                                case EntityTypes.MatedRabbit:
+                                    gfx.FillRectangle(Brushes.DarkRed, new Rectangle(x * squareWidth, y * squareHeight, squareWidth, squareHeight));
                                     break;
                                 default:
                                     break;
@@ -122,13 +142,21 @@ namespace Ecosystem.Simulator
                         }
                     }
                 }
-                bmp.Save($"Result/result.bmp");
+                try
+                {
+                    bmp.Save($"Result/result.bmp");
+                }
+                catch (Exception)
+                {
+                }
             }
 
             Console.WriteLine($"Unfed : {unfed}");
             Console.WriteLine($"Fed : {fed}");
             Console.WriteLine($"Food : {food}");
+            Console.WriteLine($"Mated : {mated}");
             fedPop = fed;
+            matedPop = mated;
             return unfed == 0;
         }
 

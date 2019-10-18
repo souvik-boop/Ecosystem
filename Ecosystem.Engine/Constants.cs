@@ -14,6 +14,8 @@
             Rabbit = 2000,
             FedRabbit = 2001,
             MovedRabbit = 2002,
+            MatedRabbit = 2003,
+            MovedAndFedRabbit = 2004,
 
             //Food Source entities
             Berries = 3000,
